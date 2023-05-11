@@ -10,10 +10,25 @@ class BaseModel():
     """
     today = datetime.now()
 
-    def __init__(self):
-        self.id = str(uuid.uuid4())
-        self.created_at = self.today
-        self.updated_at = self.today
+    def __init__(self, *args, **kwargs):
+        """ Initialize the BaseModel instance attributes
+
+        ARGS: *args 
+            **kwargs: key : value // attribute name : attribute value
+        """
+        if kwargs:
+            
+            d_format = "%Y-%m-%dT%H:%M:%S.%f"
+            kw_dict = kwargs.copy()
+            del kw_dict['__class__']
+            for key in kw_dict:
+                if (key == "created_at" or key == "updated_at"):
+                    kw_dict[key] = datetime.strptime(kw_dict[key], d_format)
+            self.__dict__ = kw_dict
+        else:
+            self.id = str(uuid.uuid4())
+            self.created_at = self.today
+            self.updated_at = self.today
 
     def __str__(self):
         """the string representation of how class will print"""
@@ -25,10 +40,10 @@ class BaseModel():
         self.updated_at = self.today
     
     def to_dict(self):
-        """this method will return a dictionary containing all 
-        keys/values of __dict__ instances"""
-        r_dict = self.__dict__.copy()
-        r_dict["__class__"] = self.__class__.__name__
-        r_dict["created_at"] = self.created_at.isoformat()
-        r_dict["updated_at"] = self.updated_at.isoformat()
-        return r_dict
+        """this method will generate a dictionary representation of an instance
+        """
+        m_dict = self.__dict__.copy()
+        m_dict["__class__"] = self.__class__.__name__
+        m_dict["created_at"] = self.created_at.isoformat()
+        m_dict["updated_at"] = self.updated_at.isoformat()
+        return m_dict
