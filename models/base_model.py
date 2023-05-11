@@ -1,17 +1,17 @@
 #!/usr/bin/python3
 """This Base Model defines all common attributes/methods for other classes used for the entire project. 
-    The class called "model" is the representation of an object/instance.  
+    The class called "BaseModel" is the representation of an object/instance.  
     """
 import uuid
 from datetime import datetime
 
-class Basemodel():
+class BaseModel():
     """This class defines all attributes/methods for other classes.
     """
     today = datetime.now()
 
-    def __init__(self, id, created_at, updated_at):
-        self.id = str(uuid.uuid4)
+    def __init__(self):
+        self.id = str(uuid.uuid4())
         self.created_at = self.today
         self.updated_at = self.today
 
