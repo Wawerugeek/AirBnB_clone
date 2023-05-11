@@ -20,7 +20,7 @@ class BaseModel():
             
             d_format = "%Y-%m-%dT%H:%M:%S.%f"
             kw_dict = kwargs.copy() #create a copy of the dict before modification
-            del kw_dict['__class__'] #__class__ should not be added as attribute
+            del kw_dict['__class__'] #__class__ should not be added as attribute so del
             #iterate through the dict to change key from string obj to datetime obj
             for key in kw_dict:
                 if (key == "created_at" or key == "updated_at"):
