@@ -4,6 +4,7 @@
     """
 import uuid
 from datetime import datetime
+from models import storage
 
 class BaseModel():
     """This class defines all attributes/methods for other classes.
@@ -30,6 +31,7 @@ class BaseModel():
             self.id = str(uuid.uuid4()) #generate unique id
             self.created_at = self.today
             self.updated_at = self.today
+            storage.new(self) #if a new instance we call new() on storage
 
     def __str__(self):
         """the string representation of how class will print"""
@@ -39,6 +41,7 @@ class BaseModel():
         """this public instance method updates the public instance varaiable
         (updated_at) with the current date"""
         self.updated_at = self.today
+        storage.save()
     
     def to_dict(self):
         """this method will generate a dictionary representation of an instance
