@@ -43,16 +43,15 @@ class FileStorage():
         """deserializes json file to __objects
         only if json file.json exits, otherwise
         do nothing"""
-        #check if the file exists
-        reload_dict = {}
+        #check if the file exists if yes deserialize
         if os.path.isfile(FileStorage.__file_path):
             with open(FileStorage.__file_path, "r") as file:
-                object_dict = json.load(file)
-                FileStorage.__objects = {}
-
-                for key in object_dict:
-                    class_name = key.split(".")[0]
-                    FileStorage.__objects[key] = reload_dict[class_name](**object_dict[key])
+                object_dic = json.load(file)
+                
+                for value in object_dic.values():
+                    class_name = value["__class__"]
+                    del value["__class__"]
+                    self.new(eval(class_name)(**value))
         else:
             return 
         
