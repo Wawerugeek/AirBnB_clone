@@ -139,7 +139,7 @@ class HBNBCommand(cmd.Cmd):
             objs_list = [str[obj] for key, obj in objs_dict.items if key.startswith(c_name) + '.']
             print(json.dumps(objs_list))
 
-    def update(self, args):
+    def do_update(self, args):
         """updates an instance based on the class name and id
         by adding or updating attribute
 

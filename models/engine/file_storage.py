@@ -50,7 +50,7 @@ class FileStorage():
                 
                 for value in object_dic.values():
                     class_name = value["__class__"]
-                    del value["__class__"]
+                    # del value["__class__"]
                     self.new(eval(class_name)(**value))
         else:
             return 
