@@ -7,7 +7,7 @@ class User(BaseModel):
     """_summary_
 
     Args:
-        BaseModel (class): the BaseModel class_
+        BaseModel (class): the BaseModel_
     """
     email = ""
     password = ""

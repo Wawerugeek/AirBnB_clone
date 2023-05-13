@@ -46,10 +46,19 @@ class FileStorage():
         #check if the file exists if yes deserialize
         from models.user import User
         from models.base_model import BaseModel
+        from models.state import State
+        from models.review import Review
+        from models.amenity import Amenity
+        from models.place import Place
 
         Reload_dict = {
             "BaseModel" : BaseModel,
-            "User" : User
+            "User" : User,
+            "State" : State,
+            "Review" : Review,
+            "Amenity" : Amenity,
+            "Place": Place
+
         }
         if os.path.isfile(FileStorage.__file_path):
             with open(FileStorage.__file_path, "r") as file:
