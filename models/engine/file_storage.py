@@ -44,14 +44,20 @@ class FileStorage():
         only if json file.json exits, otherwise
         do nothing"""
         #check if the file exists if yes deserialize
+        from models.user import User
+        from models.base_model import BaseModel
+
+        Reload_dict = {
+            "BaseModel" : BaseModel,
+            "User" : User
+        }
         if os.path.isfile(FileStorage.__file_path):
             with open(FileStorage.__file_path, "r") as file:
                 object_dic = json.load(file)
                 
-                for value in object_dic.values():
-                    class_name = value["__class__"]
-                    # del value["__class__"]
-                    self.new(eval(class_name)(**value))
+                for key in object_dic:
+                    key_name = key.split(".")[0]
+                    FileStorage.__objects[key] = Reload_dict[key_name](**object_dic[key])
         else:
             return 
         
