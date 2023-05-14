@@ -3,6 +3,7 @@
 that inherits from BaseModel"""
 from models.base_model import BaseModel
 
+
 class User(BaseModel):
     """_summary_
 
@@ -13,4 +14,3 @@ class User(BaseModel):
     password = ""
     first_name = ""
     last_name = ""
-

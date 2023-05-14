@@ -6,6 +6,7 @@ import uuid
 from datetime import datetime
 from models import storage
 
+
 class BaseModel():
     """This class defines all attributes/methods for other classes.
     """
@@ -20,18 +21,20 @@ class BaseModel():
         if kwargs:
             
             d_format = "%Y-%m-%dT%H:%M:%S.%f"
-            kw_dict = kwargs.copy() #create a copy of the dict before modification
-            del kw_dict['__class__'] #__class__ should not be added as attribute so del
-            #iterate through the dict to change key from string obj to datetime obj
+            kw_dict = kwargs.copy()
+            del kw_dict['__class__']
+            '#__class__ should not be added as attribute so del'
+            '#iterate through the dict to change key from string obj to datetime obj'
             for key in kw_dict:
                 if (key == "created_at" or key == "updated_at"):
                     kw_dict[key] = datetime.strptime(kw_dict[key], d_format)
             self.__dict__ = kw_dict
         else:
-            self.id = str(uuid.uuid4()) #generate unique id
+            self.id = str(uuid.uuid4())
             self.created_at = self.today
             self.updated_at = self.today
-            storage.new(self) #if a new instance we call new() on storage
+            storage.new(self)
+            '#if a new instance we call new() on storage'
 
     def __str__(self):
         """the string representation of how class will print"""
@@ -46,7 +49,8 @@ class BaseModel():
     def to_dict(self):
         """this method will generate a dictionary representation of an instance
         """
-        m_dict = self.__dict__.copy() #create a copy before modification.
+        # create a copy before modification.
+        m_dict = self.__dict__.copy()
         m_dict["__class__"] = self.__class__.__name__
         m_dict["created_at"] = self.created_at.isoformat()
         m_dict["updated_at"] = self.updated_at.isoformat()

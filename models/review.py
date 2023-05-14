@@ -2,6 +2,7 @@
 """class review that inherits BaseModel"""
 from models.base_model import BaseModel
 
+
 class Review(BaseModel):
     """Has two attributes"""
     place_id = ""

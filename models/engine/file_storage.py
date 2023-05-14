@@ -3,11 +3,12 @@
 import json
 import os
 
+
 class FileStorage():
     """this class serializes instances to a JSON file
     and deserializes JSON file to instances (python)
     
-    it has two class atrributes and and four methods
+    it has two class attributes and four methods
     """
 
     __file_path = "file.json" 
@@ -25,7 +26,7 @@ class FileStorage():
         """
         c_name = obj.__class__.__name__
         o_id = obj.id
-        i_key = f"{c_name}.{o_id}" #generate instance key from obj.id and class name
+        i_key = f"{c_name}.{o_id}"   '#generate instance key from obj.id and class name'
         FileStorage.__objects[i_key] = obj
 
     def save(self):
@@ -33,17 +34,16 @@ class FileStorage():
         obj_dict = {}
 
         for key, value in FileStorage.__objects.items():
-            obj_dict[key] = value.to_dict() #function from BaseModel
+            obj_dict[key] = value.to_dict()
 
         with open(self.__file_path, "w") as f_path:
             json.dump(obj_dict, f_path)
 
-    
     def reload(self):
         """deserializes json file to __objects
         only if json file.json exits, otherwise
         do nothing"""
-        #check if the file exists if yes deserialize
+        '#check if the file exists if yes deserialize'
         from models.user import User
         from models.base_model import BaseModel
         from models.state import State
@@ -52,11 +52,11 @@ class FileStorage():
         from models.place import Place
 
         Reload_dict = {
-            "BaseModel" : BaseModel,
-            "User" : User,
-            "State" : State,
-            "Review" : Review,
-            "Amenity" : Amenity,
+            "BaseModel": BaseModel,
+            "User": User,
+            "State": State,
+            "Review": Review,
+            "Amenity": Amenity,
             "Place": Place
 
         }
@@ -70,4 +70,3 @@ class FileStorage():
         else:
             return 
         
-

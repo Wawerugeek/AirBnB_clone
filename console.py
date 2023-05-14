@@ -5,11 +5,25 @@ import shlex
 from models import storage
 from models.base_model import BaseModel
 import json
+from models.amenity import Amenity
+from models.place import Place
+from models.city import City
+from models.review import Review
+from models.state import State
+from models.user import User
 
 class HBNBCommand(cmd.Cmd):
 
     prompt = '(hbnb)'
-    c_dict = {'BaseModel': BaseModel}
+    c_dict = {
+        'BaseModel': BaseModel,
+        "Amenity" : Amenity,
+        "Place" : Place,
+        "City" : City,
+        "User" : User,
+        "State" : State,
+        "Review" : Review
+              }
     
     def do_EOF(self, arg):
         """This indicates the end of file """
