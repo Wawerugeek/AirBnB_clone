@@ -58,5 +58,8 @@ class TestFileStorage(unittest.TestCase):
         from models import storage
         self.assertEqual(storage, FileStorage)
 
+if __name__ == '__main__':
+    unittest.main()
+
     
 
