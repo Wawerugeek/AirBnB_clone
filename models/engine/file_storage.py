@@ -23,8 +23,7 @@ class FileStorage():
             obj (__object): sets in object with description (path:__file.path)
         """
         c_name = obj.__class__.__name__
-        o_id = obj.id
-        i_key = f"{c_name}.{o_id}"   '#generate instance key'
+        i_key = "{}.{}".format(c_name, obj.id)
         FileStorage.__objects[i_key] = obj
 
     def save(self):
@@ -48,7 +47,7 @@ class FileStorage():
         from models.review import Review
         from models.amenity import Amenity
         from models.place import Place
-
+       
         Reload_dict = {
             "BaseModel": BaseModel,
             "User": User,
@@ -60,7 +59,7 @@ class FileStorage():
         }
         if os.path.isfile(FileStorage.__file_path):
             with open(FileStorage.__file_path, "r", encoding='utf-8') as file:
-                object_dic = json.loads(file.read())
+                object_dic = json.load(file)
 
                 for key, value in object_dic.items():
                     self.new(Reload_dict[value['__class__']](**value))
