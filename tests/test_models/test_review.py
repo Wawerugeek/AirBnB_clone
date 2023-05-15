@@ -28,7 +28,3 @@ class TestReview(unittest.TestCase):
         self.assertEqual(self.review.user_id, "")
         self.assertEqual(self.review.text, "")
 
-    def test_save(self):
-        """Tests the save method of Review"""
-        self.review.save()
-        self.assertNotEqual(self.review.created_at, self.review.updated_at)

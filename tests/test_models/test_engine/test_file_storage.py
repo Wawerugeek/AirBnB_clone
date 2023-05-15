@@ -39,7 +39,7 @@ class TestFileStorage(unittest.TestCase):
                 raise Exception("error: could not remove {}".format(F_path))
         
         
-        self.assertTrue(os.path.exists(F_path))
+        self.assertFalse(os.path.exists(F_path))
 
     def test_m_doc(self):
         """test wheher the module has documentation"""
@@ -52,7 +52,7 @@ class TestFileStorage(unittest.TestCase):
     def test_instance(self):
         """verify storage"""
         from models import storage
-        self.assertEqual(storage, FileStorage)
+        self.assertEqual(type(storage), FileStorage)
 
 if __name__ == '__main__':
     unittest.main()

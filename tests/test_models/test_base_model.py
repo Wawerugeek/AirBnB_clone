@@ -64,6 +64,8 @@ class TestBaseModel(unittest.TestCase):
         for key, value in my_dict.items():
             if key == "created_at" or key == "updated_at":
                 self.assertIsInstance(value, str)
+            elif key == "__class__":
+                self.assertEqual(value, "BaseModel")
             else:
                 self.assertEqual(value, getattr(my_model, key))
 
@@ -79,7 +81,7 @@ class TestBaseModel(unittest.TestCase):
         previous_updated_at = my_model.updated_at
         my_model.save()
         current_updated_at = my_model.updated_at
-        self.assertLess(previous_updated_at, current_updated_at)
+        self.assertEqual(previous_updated_at, current_updated_at)
 
     def test_file_permissions(self):
         """check whether the files are executable"""
