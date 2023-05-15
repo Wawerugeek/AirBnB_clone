@@ -37,7 +37,7 @@ class BaseModel():
 
     def __str__(self):
         """the string representation of how class will print"""
-        return (f"[{type(self).__name__}] ({self.id}) {self.__dict__}")
+        return (f"[{__class__.__name__}] ({self.id}) {self.__dict__}")
 
     def save(self):
         """this public instance method updates the public instance varaiable

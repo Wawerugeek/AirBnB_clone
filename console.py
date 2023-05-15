@@ -2,6 +2,7 @@
 """This module contains the entry point of the command interpreter:"""
 import cmd
 import shlex
+import models
 from models import storage
 from models.base_model import BaseModel
 from models.amenity import Amenity
@@ -201,8 +202,16 @@ class HBNBCommand(cmd.Cmd):
                 print("** value missing **")
 
             setattr(obj, my_list[2], my_list[3])
-            storage.save()
             obj.save()
+            
+    def do_count(self, args):
+        """counts the instances of a class"""
+        counter = 0
+        obj_dic = storage.all()
+        for key in obj_dic:
+            if (args in key):
+                counter += 1
+        print(counter)
 
 
 if __name__ == '__main__':
