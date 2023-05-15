@@ -201,6 +201,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** value missing **")
 
             setattr(obj, my_list[2], my_list[3].strip('"'))
+            storage.save()
             obj.save()
 
 
