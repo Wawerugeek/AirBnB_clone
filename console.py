@@ -13,6 +13,7 @@ from models.state import State
 from models.user import User
 
 class HBNBCommand(cmd.Cmd):
+    """the class for cmd"""
 
     prompt = '(hbnb)'
     c_dict = {
@@ -20,9 +21,9 @@ class HBNBCommand(cmd.Cmd):
         "Amenity" : Amenity,
         "Place" : Place,
         "City" : City,
-        "User" : User,
+        "User" : Review,
         "State" : State,
-        "Review" : Review
+        "Review" : User
               }
     
     def do_EOF(self, arg):
@@ -88,12 +89,13 @@ class HBNBCommand(cmd.Cmd):
             return 
         
         objs_dict = storage.all()
-        key = f"{my_list[0]}.{my_list[1]}"
-        if key in objs_dict:
-            instance_rep = str(objs_dict[key])
-            print(instance_rep)
+        key1 = f"{my_list[0]}.{my_list[1]}"
         
-        else:
+        try:
+            value = objs_dict[key1]
+            print(value)
+        
+        except KeyError:
             print("** no instance found **")
 
     def do_destroy(self, args):
@@ -141,17 +143,22 @@ class HBNBCommand(cmd.Cmd):
 
         #print all objects if no class name is provided
         if not args:
-            objs_list = [str(obj) for obj in objs_dict.values()]
-            print(json.dumps(objs_list))
+            print("** class name missing **")
+            return
         
+        my_list = args.split()
+        all_list = []
+
+        if my_list[0] not in HBNBCommand.c_dict:
+            print("** class doesn't exist **")
+
         else:
-            c_name = args.split()[0]
             #check whether class exists
-            if c_name not in HBNBCommand.c_dict:
-                print("** class doesn't exist **")
-                return
-            objs_list = [str[obj] for key, obj in objs_dict.items if key.startswith(c_name) + '.']
-            print(json.dumps(objs_list))
+            for key, value in objs_dict.items():
+                obj_name = value.__class__.__name__
+                if obj_name == my_list[0]:
+                    all_list += [value.__str__()]
+                print (all_list)
 
     def do_update(self, args):
         """updates an instance based on the class name and id
@@ -164,8 +171,7 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             print("** class name missing **")
             return 
-        #split the argument to handle quoted strings
-        my_list = shlex.split(args)
+        my_list = args.split()
 
         #ensure that the classname is valid
         if my_list[0] not in HBNBCommand.c_dict.keys():
@@ -173,34 +179,31 @@ class HBNBCommand(cmd.Cmd):
             return 
         
         #check whether instance id is provided
-        if len(my_list) < 2:
+        elif len(my_list) == 1:
             print("** instance id is missing **")
             return 
         
         #retrieve an instance from storage 
-        objs_dict = storage.all()
-        key = f"{my_list[0]}.{my_list[1]}"
-        if key not in objs_dict:
-            print("** instance not found **")
-            return 
-
-        #ensure that attribute name and value are given
-        if len(my_list) == 2:
-            print("** attribute name missing **")
-            return 
-        
-        if len(my_list) == 3:
-            print("** value missing **")
-            return 
-        #check whether it has an instance and update
-        if hasattr(objs_dict[key], my_list[2]):
-            d_type = type(getattr(objs_dict[key], my_list[2]))
-            setattr(objs_dict[key], my_list[2], d_type(my_list[3]))
         else:
-            setattr(objs_dict[key], my_list[2], my_list[3])
+            objs_dict = storage.all()
+            key = f"{my_list[0]}.{my_list[1]}"
 
-        #save changes to storage
-        storage.save()
+            for key, value in objs_dict.items():
+                object_name = value(type(self).__name__)
+                object_id = value.id
 
+                if object_name == my_list[0] and object_id == my_list[1].strip('"'):
+                    if len(my_list) == 2:
+                        print("** attribute name missing **")
+
+                    elif len(my_list) == 3:
+                        print("** value missing **")
+                    
+                    else:
+                        setattr(value, my_list[2], my_list[3])
+                        storage.save()
+                        return 
+            print ("** no instances found **")
+         
 if __name__=='__main__':
     HBNBCommand().cmdloop()

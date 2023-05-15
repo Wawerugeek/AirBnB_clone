@@ -3,7 +3,6 @@
 import json
 import os
 
-
 class FileStorage():
     """this class serializes instances to a JSON file
     and deserializes JSON file to instances (python)
@@ -34,16 +33,17 @@ class FileStorage():
         obj_dict = {}
 
         for key, value in FileStorage.__objects.items():
-            obj_dict[key] = value.to_dict()
-
-        with open(self.__file_path, "w") as f_path:
+            if value:
+                obj_dict[key] = value.to_dict()
+                
+        with open(self.__file_path, "w", encoding='utf-8') as f_path:
             json.dump(obj_dict, f_path)
 
     def reload(self):
         """deserializes json file to __objects
         only if json file.json exits, otherwise
         do nothing"""
-        '#check if the file exists if yes deserialize'
+        #check if the file exists if yes deserialize
         from models.user import User
         from models.base_model import BaseModel
         from models.state import State
@@ -61,12 +61,8 @@ class FileStorage():
 
         }
         if os.path.isfile(FileStorage.__file_path):
-            with open(FileStorage.__file_path, "r") as file:
-                object_dic = json.load(file)
+            with open(FileStorage.__file_path, "r", encoding='utf-8') as file:
+                object_dic = json.loads(file.read())
                 
-                for key in object_dic:
-                    key_name = key.split(".")[0]
-                    FileStorage.__objects[key] = Reload_dict[key_name](**object_dic[key])
-        else:
-            return 
-        
+                for key, value in object_dic.items():
+                    self.new(Reload_dict[value['__class__']] (**value))

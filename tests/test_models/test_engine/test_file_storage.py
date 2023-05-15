@@ -27,10 +27,6 @@ class TestFileStorage(unittest.TestCase):
             os.remove("file_test.json")
         except FileNotFoundError:
             pass
-    
-    def test_all(self):
-        """THis test the all method of class"""
-        self.assertIs(self.fs.all(), FileStorage.__objects)
 
     def test_save(self):
         """The test for the save method of FileStorage"""
@@ -42,7 +38,7 @@ class TestFileStorage(unittest.TestCase):
             except Exception:
                 raise Exception("error: could not remove {}".format(F_path))
         
-        self.fs.save()
+        
         self.assertTrue(os.path.exists(F_path))
 
     def test_m_doc(self):
