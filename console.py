@@ -200,7 +200,7 @@ class HBNBCommand(cmd.Cmd):
             if len(my_list) < 4:
                 print("** value missing **")
 
-            setattr(obj, my_list[2], my_list[3].strip('"'))
+            setattr(obj, my_list[2], my_list[3])
             storage.save()
             obj.save()
 
