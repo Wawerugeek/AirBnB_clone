@@ -1,7 +1,7 @@
 #!/usr/bin/python3
-"""This Base Model defines all common attributes/methods for other classes used for the entire project. 
-    The class called "BaseModel" is the representation of an object/instance.  
-    """
+"""This Base Model defines all common attributes/methods for other classes
+used for the entire project.The class called "BaseModel" is the representation
+of an object/instance."""
 import uuid
 from datetime import datetime
 from models import storage
@@ -15,16 +15,15 @@ class BaseModel():
     def __init__(self, *args, **kwargs):
         """ Initialize the BaseModel instance attributes
 
-        ARGS: *args 
-            **kwargs: key : value // attribute name : attribute value
+        ARGS: *args
+        **kwargs: key : value // attribute name : attribute value
         """
         if kwargs:
-            
             d_format = "%Y-%m-%dT%H:%M:%S.%f"
             kw_dict = kwargs.copy()
             del kw_dict['__class__']
             '#__class__ should not be added as attribute so del'
-            '#iterate through the dict to change key from string obj to datetime obj'
+            '#iterate through the dict to change key to datetime obj'
             for key in kw_dict:
                 if (key == "created_at" or key == "updated_at"):
                     kw_dict[key] = datetime.strptime(kw_dict[key], d_format)
@@ -39,13 +38,13 @@ class BaseModel():
     def __str__(self):
         """the string representation of how class will print"""
         return (f"[{type(self).__name__}] ({self.id}) {self.__dict__}")
-    
+
     def save(self):
         """this public instance method updates the public instance varaiable
         (updated_at) with the current date"""
         self.updated_at = self.today
         storage.save()
-    
+
     def to_dict(self):
         """this method will generate a dictionary representation of an instance
         """
