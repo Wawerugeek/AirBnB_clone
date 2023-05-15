@@ -170,19 +170,17 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             print("** class name missing **")
             return
+
         my_list = shlex.split(args)
 
         '#ensure that the classname is valid'
         if my_list[0] not in HBNBCommand.c_dict.keys():
             print("** class doesn't exist **")
             return
-
-        '#check whether instance id is provided'
         elif len(my_list) == 1:
             print("** instance id is missing **")
             return
 
-        '#retrieve an instance from storage'
         else:
             objs_dict = storage.all()
             obj = None
