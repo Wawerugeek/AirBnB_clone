@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """this module is used to store our first object"""
 import json
-import os
+import os.path
 
 
 class FileStorage():
@@ -57,8 +57,13 @@ class FileStorage():
             "Place": Place
 
         }
-        if os.path.isfile(FileStorage.__file_path):
-            with open(FileStorage.__file_path, "r", encoding='utf-8') as file:
-                object_dic = json.loads(file.read())
-                for key, value in object_dic.items():
-                    self.new(Reload_dict[value['__class__']](**value))
+        
+        if not os.path.isfile(FileStorage.__file_path):
+            return
+        
+        with open(FileStorage.__file_path, "r", encoding='utf-8') as file:
+                objects = json.load(file)
+                FileStorage.__objects = {}
+                for k in objects:
+                    c_name = k.split(".")[0]
+                    FileStorage.__objects[k] = Reload_dict[c_name](**objects[k])
