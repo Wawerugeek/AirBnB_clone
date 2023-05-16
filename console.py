@@ -135,26 +135,35 @@ class HBNBCommand(cmd.Cmd):
         storage.reload()
 
         '#get all objects from storage'
-        objs_dict = storage.all()
-
-        '#print all objects if no class name is provided'
-        if not args:
-            print("** class name missing **")
-            return
-
-        my_list = args.split()
-        all_list = []
-
-        if my_list[0] not in HBNBCommand.c_dict:
-            print("** class doesn't exist **")
-
+        args = args.split()
+        if len(args) > 0:
+            command = args[0]
+            class_name = command.split('.')[0]
+        
         else:
-            '#check whether class exists'
-            for key, value in objs_dict.items():
-                obj_name = value.__class__.__name__
-                if obj_name == my_list[0]:
-                    all_list += [value.__str__()]
-            print(all_list)
+            class_name = None
+            
+        '#get all objects from storage'
+        objs_dict = storage.all()
+        '#filter objects by class name'
+        if class_name:
+            objs = [obj for obj in objs_dict.values() if type(obj).__name__ == class_name]
+            
+        else: 
+            objs = objs_dict.values()
+            
+        for obj in objs:
+            print(obj)
+        
+        if not class_name:
+            print("** class name missing **")
+        elif not objs:
+            print('** no instance found **')
+        
+        else:
+            for obj in objs:
+                print(obj)
+
 
     def do_update(self, args):
         """updates an instance based on the class name and id
@@ -201,13 +210,13 @@ class HBNBCommand(cmd.Cmd):
             obj.save()
             
     def do_count(self, args):
-        """counts the instances of a class"""
-        counter = 0
-        obj_dic = storage.all()
-        for key in obj_dic:
-            if (args in key):
-                counter += 1
-        print(counter)
+        """counts / retrievethe instances of a class
+        count <class> or <class>.count"""
+        objs = models.storage.all()
+        name = args.split('.')[0] if '.' in args else args
+        count = [objs for  objs in objs.values() if type(objs).__name__ == name]
+        print(len(count))
+        
 
     def emptyline(self):
         """empty line should do nothing"""
