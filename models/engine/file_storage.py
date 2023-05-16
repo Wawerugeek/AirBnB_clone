@@ -33,7 +33,7 @@ class FileStorage():
 
         for key in FileStorage.__objects:
             obj_dict[key] = FileStorage.__objects[key].to_dict()
-            
+
         with open(FileStorage.__file_path, "w", encoding='utf-8') as f_path:
             json.dump(obj_dict, f_path)
 
@@ -48,7 +48,7 @@ class FileStorage():
         from models.review import Review
         from models.amenity import Amenity
         from models.place import Place
-        
+
         R_dict = {
             "BaseModel": BaseModel,
             "User": User,
@@ -58,13 +58,13 @@ class FileStorage():
             "Place": Place
 
         }
-        
+
         if not os.path.isfile(FileStorage.__file_path):
             return
-        
+
         with open(FileStorage.__file_path, "r", encoding='utf-8') as file:
-                objects = json.load(file)
-                FileStorage.__objects = {}
-                for k in objects:
-                    c_name = k.split(".")[0]
-                    FileStorage.__objects[k] = R_dict[c_name](**objects[k])
+            objects = json.load(file)
+            FileStorage.__objects = {}
+            for k in objects:
+                c_name = k.split(".")[0]
+                FileStorage.__objects[k] = R_dict[c_name](**objects[k])
