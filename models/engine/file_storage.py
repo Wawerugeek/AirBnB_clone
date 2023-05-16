@@ -1,7 +1,13 @@
 #!/usr/bin/python3
 """this module is used to store our first object"""
 import json
-import os.path
+import os
+from models.user import User
+from models.base_model import BaseModel
+from models.state import State
+from models.review import Review
+from models.amenity import Amenity
+from models.place import Place
 
 
 class FileStorage():
@@ -33,7 +39,7 @@ class FileStorage():
         for key, value in FileStorage.__objects.items():
             if value:
                 obj_dict[key] = value.to_dict()
-        with open(self.__file_path, "w", encoding='utf-8') as f_path:
+        with open(FileStorage.__file_path, "w", encoding='utf-8') as f_path:
             json.dump(obj_dict, f_path)
 
     def reload(self):
@@ -41,13 +47,7 @@ class FileStorage():
         only if json file.json exits, otherwise
         do nothing"""
         '#check if the file exists if yes deserialize'
-        from models.user import User
-        from models.base_model import BaseModel
-        from models.state import State
-        from models.review import Review
-        from models.amenity import Amenity
-        from models.place import Place
-
+        
         Reload_dict = {
             "BaseModel": BaseModel,
             "User": User,
@@ -59,6 +59,6 @@ class FileStorage():
         }
         if os.path.isfile(FileStorage.__file_path):
             with open(FileStorage.__file_path, "r", encoding='utf-8') as file:
-                object_dic = json.loads(file.read())
+                object_dic = json.load(file.read())
                 for key, value in object_dic.items():
                     self.new(Reload_dict[value['__class__']](**value))
