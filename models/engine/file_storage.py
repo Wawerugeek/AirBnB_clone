@@ -14,7 +14,7 @@ class FileStorage():
 
     def all(self):
         """this returns the dictionary __object"""
-        return FileStorage.__objects
+        return (FileStorage.__objects)
 
     def new(self, obj):
         """_sets in __objects to obj with key <obj class name>.id
@@ -23,17 +23,18 @@ class FileStorage():
             obj (__object): sets in object with description (path:__file.path)
         """
         c_name = obj.__class__.__name__
-        i_key = "{}.{}".format(c_name, obj.id)
+        id = obj.id
+        i_key = c_name + "." + id
         FileStorage.__objects[i_key] = obj
 
     def save(self):
         """serializes objects to json file"""
         obj_dict = {}
 
-        for key, value in FileStorage.__objects.items():
-            if value:
-                obj_dict[key] = value.to_dict()
-        with open(self.__file_path, "w", encoding='utf-8') as f_path:
+        for key in FileStorage.__objects:
+            obj_dict[key] = FileStorage.__objects[key].to_dict()
+
+        with open(FileStorage.__file_path, "w", encoding='utf-8') as f_path:
             json.dump(obj_dict, f_path)
 
     def reload(self):
@@ -48,7 +49,7 @@ class FileStorage():
         from models.amenity import Amenity
         from models.place import Place
 
-        Reload_dict = {
+        R_dict = {
             "BaseModel": BaseModel,
             "User": User,
             "State": State,
@@ -57,9 +58,13 @@ class FileStorage():
             "Place": Place
 
         }
-        if os.path.isfile(FileStorage.__file_path):
-            with open(FileStorage.__file_path, "r", encoding='utf-8') as file:
-                object_dic = json.load(file)
 
-                for key, value in object_dic.items():
-                    self.new(Reload_dict[value['__class__']](**value))
+        if not os.path.isfile(FileStorage.__file_path):
+            return
+
+        with open(FileStorage.__file_path, "r", encoding='utf-8') as file:
+            objects = json.load(file)
+            FileStorage.__objects = {}
+            for k in objects:
+                c_name = k.split(".")[0]
+                FileStorage.__objects[k] = R_dict[c_name](**objects[k])
