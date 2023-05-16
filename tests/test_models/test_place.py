@@ -52,3 +52,6 @@ class TestPlace(unittest.TestCase):
         """Tests that a Place instance is also a BaseModel instance"""
         place = Place()
         self.assertIsInstance(place, BaseModel)
+
+if __name__ == '__main__':
+    unittest.main()

@@ -28,3 +28,6 @@ class TestState(unittest.TestCase):
         """Test the attributes of State class"""
         self.assertTrue(hasattr(self.state, "name"))
         self.assertEqual(type(self.state.name), str)
+
+if __name__ == '__main__':
+    unittest.main()

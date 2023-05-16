@@ -48,5 +48,8 @@ class TestAmenity(unittest.TestCase):
         "#check that the amenity class has the expected attributes"
         for a_name, a_type in expected_attrs.items():
             self.assertTrue(hasattr(Amenity, a_name))
-            self.assertIsInstance(getattr(Amenity, a_name), a_type)  
+            self.assertIsInstance(getattr(Amenity, a_name), a_type)
+
+if __name__ == '__main__':
+    unnitest.main()
 

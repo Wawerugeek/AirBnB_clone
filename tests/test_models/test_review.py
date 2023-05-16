@@ -32,3 +32,6 @@ class TestReview(unittest.TestCase):
         """Tests the save method of Review"""
         self.review.save()
         self.assertNotEqual(self.review.created_at, self.review.updated_at)
+
+if __name__ == '__main__':
+    unittest.main()
