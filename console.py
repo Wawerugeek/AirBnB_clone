@@ -11,6 +11,7 @@ from models.city import City
 from models.review import Review
 from models.state import State
 from models.user import User
+import re
 
 
 class HBNBCommand(cmd.Cmd):
@@ -26,6 +27,19 @@ class HBNBCommand(cmd.Cmd):
         "State": State,
         "Review": Review
         }
+    @staticmethod
+    def get_list(c_name):
+        """help to retrieve the list objects of a given class"""
+        
+        objs = storage.all()
+        obj_list = []
+        
+        for k, v in objs.items():
+            obj_name = k.split('.')[0]
+            if obj_name == c_name:
+                obj_list.append(str(v))
+                
+        return obj_list
 
     def do_EOF(self, arg):
         """This indicates the end of file """
@@ -57,13 +71,16 @@ class HBNBCommand(cmd.Cmd):
         my_list = shlex.split(args)
 
         '#check whether the class name is valid'
-        if my_list[0] not in HBNBCommand.c_dict.keys():
+        if my_list[0] not in HBNBCommand.c_dict:
             print("** class doesn't exist **")
             return
-        '#create new instance'
+        
+        '#create new instance of a given class'
         n_instance = HBNBCommand.c_dict[my_list[0]]()
-        n_instance.save()
+        
         print(n_instance.id)
+        
+        storage.save()
 
     def do_show(self, args):
         """Prints the str rep of an instance based on cls name and ud
@@ -87,13 +104,14 @@ class HBNBCommand(cmd.Cmd):
 
         objs_dict = storage.all()
         key1 = f"{my_list[0]}.{my_list[1]}"
-
-        try:
-            value = objs_dict[key1]
-            print(value)
-
-        except KeyError:
+        
+        objects = objs_dict.get(key1)
+        
+        if objects is None:
             print("** no instance found **")
+            return 
+        
+        print(objects)
 
     def do_destroy(self, args):
         """deletes an instance based on the class name and id
@@ -118,6 +136,7 @@ class HBNBCommand(cmd.Cmd):
         storage.reload()
         objs_dict = storage.all()
         key = f"{my_list[0]}.{my_list[1]}"
+        
         if key in objs_dict:
             del objs_dict[key]
             storage.save()
@@ -135,36 +154,24 @@ class HBNBCommand(cmd.Cmd):
         storage.reload()
 
         '#get all objects from storage'
-        args = args.split()
-        if len(args) > 0:
-            command = args[0]
-            class_name = command.split('.')[0]
-        
-        else:
-            class_name = None
-            
-        '#get all objects from storage'
+        arg_list = args.split()
         objs_dict = storage.all()
-        '#filter objects by class name'
-        if class_name:
-            objs = [obj for obj in objs_dict.values() if type(obj).__name__ == class_name]
-            
-        else: 
-            objs = objs_dict.values()
-            
-        for obj in objs:
-            print(obj)
+        str_list = []
         
-        if not class_name:
-            print("** class name missing **")
-        elif not objs:
-            print('** no instance found **')
+        if len(arg_list) == 0:
+            for obj in objs_dict.values():
+                str_list.append(str(obj))
+            print(str_list)
+            return
         
-        else:
-            for obj in objs:
-                print(obj)
-
-
+        if arg_list[0] not in HBNBCommand.c_dict:
+            print("** class doesn't exist **")
+            return
+        
+        str_list = HBNBCommand.get_list(arg_list[0])
+        
+        print(str_list)
+        
     def do_update(self, args):
         """updates an instance based on the class name and id
         by adding or updating attribute
