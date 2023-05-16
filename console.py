@@ -11,13 +11,12 @@ from models.city import City
 from models.review import Review
 from models.state import State
 from models.user import User
-import re
 
 
 class HBNBCommand(cmd.Cmd):
     """the class for cmd"""
 
-    prompt = '(hbnb)'
+    prompt = '(hbnb) '
     c_dict = {
         'BaseModel': BaseModel,
         "Amenity": Amenity,
