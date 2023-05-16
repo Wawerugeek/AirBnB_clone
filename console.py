@@ -203,7 +203,7 @@ class HBNBCommand(cmd.Cmd):
         attr_name = my_list[2]
         attr_value = my_list[3]
 
-        if hasattr(obj,attr_name):
+        if hasattr(obj, attr_name):
             attr_value = type(getattr(obj, attr_name))(attr_value)
             setattr(obj, attr_name, attr_value)
             storage.save()
@@ -211,13 +211,13 @@ class HBNBCommand(cmd.Cmd):
         else:
             setattr(obj, attr_name, attr_value)
             storage.save()
-            
+
     def do_count(self, args):
         """counts / retrievethe instances of a class
         count <class> or <class>.count"""
         objs = models.storage.all()
         name = args.split('.')[0] if '.' in args else args
-        cont = [objs for  objs in objs.values() if type(objs).__name__ == name]
+        cont = [objs for objs in objs.values() if type(objs).__name__ == name]
         print(len(cont))
 
     def emptyline(self):
