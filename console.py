@@ -180,41 +180,55 @@ class HBNBCommand(cmd.Cmd):
             args (_type_): update <class name> <id> <attribute name>
             "<attribute value>"
         """
-        if not args:
+        my_list = shlex.split(args)
+        
+        if len(my_list) == 0:
             print("** class name missing **")
             return
 
-        my_list = shlex.split(args)
-
         '#ensure that the classname is valid'
-        if my_list[0] not in HBNBCommand.c_dict.keys():
+        if my_list[0] not in HBNBCommand.c_dict:
             print("** class doesn't exist **")
             return
-        elif len(my_list) == 1:
+        
+        if len(my_list) == 1:
             print("** instance id is missing **")
             return
-
-        else:
-            objs_dict = storage.all()
-            obj = None
-
-            for key, value in objs_dict.items():
-                obj_name, obj_id = key.split('.')
-                if obj_name == my_list[0] and obj_id == my_list[1]:
-                    obj = value
-                    break
-            if not obj:
-                print("** no instance found **")
-                return
-
-            if len(my_list) < 3:
-                print("** attribute name missing **")
-                return
-            if len(my_list) < 4:
-                print("** value missing **")
-
-            setattr(obj, my_list[2], my_list[3])
-            storage.save()
+        key = f"{my_list[0]}.{my_list[1]}"
+        objs_dict = storage.all()
+        obj = objs_dict.get(key)
+        obj_class = HBNBCommand.c_dict[my_list[0]]
+        
+        if obj is None:
+            """validated id"""
+            print("** no instance found **")
+            return
+        
+        if len(my_list) == 2:
+            print("** attribute name missing **")
+            return 
+        
+        if len(my_list) < 4:
+            print("** value missing **")
+            return 
+        
+        attr_name = my_list[2]
+        attr_value = my_list[3]
+        
+        if hasattr(obj_class, attr_name):
+            attr_type = type(getattr(obj_class, attr_name))
+            
+            try:
+                attr_value = attr_type(attr_value)
+            except Exception:
+                raise Exception("Failed to cast")
+        
+        try:
+            setattr(obj, attr_name, attr_value)
+        except Exception:
+            raise Exception("fAILED TO UPDATE")
+        
+        storage.save()
             
     def do_count(self, args):
         """counts / retrievethe instances of a class
