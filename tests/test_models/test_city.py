@@ -23,3 +23,6 @@ class TestCity(unittest.TestCase):
         from models.base_model import BaseModel
         city = City()
         self.assertIsInstance(city, BaseModel)
+
+if __name__ == '__main__':
+    unittest.main()

@@ -28,9 +28,15 @@ class TestState(unittest.TestCase):
         """Test the attributes of State class"""
         self.assertTrue(hasattr(self.state, "name"))
         self.assertEqual(type(self.state.name), str)
+<<<<<<< HEAD
+
+if __name__ == '__main__':
+    unittest.main()
+=======
         self.assertTrue(hasattr(self.state, "created_at"))
         self.assertTrue(hasattr(self.state, "updated_at"))
         
 
 if __name__ == "__main__":
     unittest.main()
+>>>>>>> 5ec8435b0a3999790f3e23194258ec2d98a075d1
