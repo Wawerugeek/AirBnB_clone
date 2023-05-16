@@ -49,7 +49,10 @@ class TestAmenity(unittest.TestCase):
         for a_name, a_type in expected_attrs.items():
             self.assertTrue(hasattr(Amenity, a_name))
             self.assertIsInstance(getattr(Amenity, a_name), a_type)
+<<<<<<< HEAD
 
 if __name__ == '__main__':
     unnitest.main()
 
+=======
+>>>>>>> 5ec8435b0a3999790f3e23194258ec2d98a075d1

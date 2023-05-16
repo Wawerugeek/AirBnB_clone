@@ -1,23 +1,21 @@
-#!/usr/bin/python3 
+#!/usr/bin/python3
 """this module is used to store our first object"""
 import json
-import os
+import os.path
 
 
 class FileStorage():
     """this class serializes instances to a JSON file
     and deserializes JSON file to instances (python)
-    
     it has two class attributes and four methods
     """
-
-    __file_path = "file.json" 
+    __file_path = "file.json"
     __objects = {}
-    
+
     def all(self):
         """this returns the dictionary __object"""
         return FileStorage.__objects
-    
+
     def new(self, obj):
         """_sets in __objects to obj with key <obj class name>.id
 
@@ -25,8 +23,7 @@ class FileStorage():
             obj (__object): sets in object with description (path:__file.path)
         """
         c_name = obj.__class__.__name__
-        o_id = obj.id
-        i_key = f"{c_name}.{o_id}"   '#generate instance key from obj.id and class name'
+        i_key = "{}.{}".format(c_name, obj.id)
         FileStorage.__objects[i_key] = obj
 
     def save(self):
@@ -34,9 +31,9 @@ class FileStorage():
         obj_dict = {}
 
         for key, value in FileStorage.__objects.items():
-            obj_dict[key] = value.to_dict()
-
-        with open(self.__file_path, "w") as f_path:
+            if value:
+                obj_dict[key] = value.to_dict()
+        with open(self.__file_path, "w", encoding='utf-8') as f_path:
             json.dump(obj_dict, f_path)
 
     def reload(self):
@@ -61,12 +58,8 @@ class FileStorage():
 
         }
         if os.path.isfile(FileStorage.__file_path):
-            with open(FileStorage.__file_path, "r") as file:
+            with open(FileStorage.__file_path, "r", encoding='utf-8') as file:
                 object_dic = json.load(file)
-                
-                for key in object_dic:
-                    key_name = key.split(".")[0]
-                    FileStorage.__objects[key] = Reload_dict[key_name](**object_dic[key])
-        else:
-            return 
-        
+
+                for key, value in object_dic.items():
+                    self.new(Reload_dict[value['__class__']](**value))

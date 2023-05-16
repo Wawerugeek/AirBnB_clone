@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""This module contains a class user 
+"""This module contains a class user
 that inherits from BaseModel"""
 from models.base_model import BaseModel
 
