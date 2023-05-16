@@ -2,6 +2,7 @@
 """This Base Model defines all common attributes/methods for other classes
 used for the entire project.The class called "BaseModel" is the representation
 of an object/instance."""
+
 import uuid
 from datetime import datetime
 from models import storage
@@ -50,7 +51,9 @@ class BaseModel():
         """
         # create a copy before modification.
         m_dict = dict(self.__dict__)
+        
         m_dict["__class__"] = self.__class__.__name__
         m_dict["created_at"] = self.created_at.isoformat()
         m_dict["updated_at"] = self.updated_at.isoformat()
+        
         return m_dict
