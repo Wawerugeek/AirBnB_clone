@@ -94,7 +94,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
 
-        if my_list[0] not in HBNBCommand.c_dict.keys():
+        if my_list[0] not in HBNBCommand.c_dict:
             print("** class doesn't exist **")
             return
 
@@ -125,7 +125,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
 
-        if my_list[0] not in HBNBCommand.c_dict.keys():
+        if my_list[0] not in HBNBCommand.c_dict:
             print("** class doesn't exist **")
             return
 
@@ -187,7 +187,7 @@ class HBNBCommand(cmd.Cmd):
             return
 
         '#ensure that the classname is valid'
-        if my_list[0] not in HBNBCommand.c_dict.keys():
+        if my_list[0] not in HBNBCommand.c_dict:
             print("** class doesn't exist **")
             return
         
