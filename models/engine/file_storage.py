@@ -2,12 +2,6 @@
 """this module is used to store our first object"""
 import json
 import os
-from models.user import User
-from models.base_model import BaseModel
-from models.state import State
-from models.review import Review
-from models.amenity import Amenity
-from models.place import Place
 
 
 class FileStorage():
@@ -47,6 +41,12 @@ class FileStorage():
         only if json file.json exits, otherwise
         do nothing"""
         '#check if the file exists if yes deserialize'
+        from models.user import User
+        from models.base_model import BaseModel
+        from models.state import State
+        from models.review import Review
+        from models.amenity import Amenity
+        from models.place import Place
         
         Reload_dict = {
             "BaseModel": BaseModel,
