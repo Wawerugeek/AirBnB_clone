@@ -11,7 +11,7 @@
     flex-basis: 100%;
     margin-bottom: 1;
 }
-.places article {
+article {
     width: 390px;
     margin: 10px;
     padding: 20px;
