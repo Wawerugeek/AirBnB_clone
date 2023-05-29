@@ -1,0 +1,28 @@
+header {
+    background-color: white;
+    height: 70px;
+    width: 100%;
+    border-bottom: 1px solid #CCCCCC;
+    background-image: url("../images/logo.png");
+    background-repeat: no-repeat;
+    background-position-x: 20px;
+    background-position-y: center;
+}
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+
+}
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  header {
+      background-position: left;
+      background-position-x: 1rem;
+  }
+  .mobile_nav {
+    display: none;
+  }
+}
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+
+}

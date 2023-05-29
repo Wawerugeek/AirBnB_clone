@@ -1,0 +1,38 @@
+html {
+    position: relative;
+    min-height: 100vh;
+}
+body {
+    z-index: 0;
+    font-size: 14px;
+    font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    width: 100%;
+    color: #484848;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+span {
+    color: #000000;
+}
+.container {
+    max-width: 1000px;
+    margin: 30px auto;
+    bottom: 30px;
+}
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+
+}
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+
+}
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+
+    body {
+        max-width: 1920px;
+        margin: 0 auto;
+    }
+}
