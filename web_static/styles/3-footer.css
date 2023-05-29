@@ -1,4 +1,5 @@
 footer {
+<<<<<<< HEAD
     background-color: white;
     height: 60px;
     width: 100%;
@@ -9,3 +10,15 @@ footer {
     line-height: 60px;
     color:black;
 }
+=======
+    background-color: hsl(0, 0%, 100%);
+    height: 60px;
+    width: 100%;
+    border-top: 1px solid #CCCCCC;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: 0;
+    position: absolute;
+}
+>>>>>>> c1d1610de215d1cb107e962196b5b7c43de2af6a

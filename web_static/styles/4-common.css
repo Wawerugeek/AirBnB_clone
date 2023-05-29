@@ -1,6 +1,7 @@
 body {
     margin: 0;
     padding: 0;
+<<<<<<< HEAD
     color:#484848;
     font-size: 14px;
     font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -13,3 +14,16 @@ body {
     margin-left: auto;
     margin-right: auto;
   }
+=======
+    font-size: 14px;
+    color: #484848;
+    font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+.container {
+    max-width: 1000px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    margin-right: auto;
+    margin-left: auto;
+}
+>>>>>>> c1d1610de215d1cb107e962196b5b7c43de2af6a

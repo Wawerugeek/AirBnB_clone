@@ -1,17 +1,30 @@
 .filters {
+<<<<<<< HEAD
     color: white;
+=======
+    background-color: hwb(0 100% 0%);
+>>>>>>> c1d1610de215d1cb107e962196b5b7c43de2af6a
     height: 70px;
     width: 100%;
     border: 1px solid #DDDDDD;
     border-radius: 4px;
+<<<<<<< HEAD
   }
   
   button {
+=======
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+button {
+>>>>>>> c1d1610de215d1cb107e962196b5b7c43de2af6a
     font-size: 18px;
     background-color: #FF5A5F;
     color: white;
     height: 48px;
     width: 20%;
+<<<<<<< HEAD
     border: none;
     border-radius: 4px;
     margin-right: 30px;
@@ -22,3 +35,12 @@
   button:hover {
     opacity: 0.9;
   }
+=======
+    border: 0px;
+    border-radius: 4px;
+    margin-right: 30px;
+}
+button:hover {
+    opacity: 90%;
+}
+>>>>>>> c1d1610de215d1cb107e962196b5b7c43de2af6a
